@@ -6,6 +6,16 @@ f = open('token.txt', 'r')
 token = f.read()
 f.close()
 
+def get_name_by_id(id):
+    """ получить имя друга по идентификатору """
+    url = 'https://api.vk.com/method/users.get'
+    params = {'user_ids': id, 'v': '5.52', 'access_token': token}
+    r = requests.get(url, params)
+    j = json.loads(r.content)
+    first_name = j['response'][0]['first_name']
+    last_name = j['response'][0]['last_name']
+    return first_name + ' ' + last_name
+
 # получить список своих друзей
 params = {
     'v': '5.52', 
@@ -30,4 +40,4 @@ for friend in friends['response']['items']:
     time.sleep(1)
 
 print()
-print(max_user_id, max_count)
+print(max_user_id, get_name_by_id(max_user_id), max_count)
