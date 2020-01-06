@@ -18,3 +18,5 @@ params = {
 }
 
 r = requests.get('https://api.vk.com/method/wall.post', params=params)
+j = json.loads(r.content)
+print('post_id:', j['response']['post_id'])
